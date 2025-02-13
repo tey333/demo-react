@@ -1,6 +1,6 @@
-// src/components/Login.js
 import React, { useState, useEffect } from 'react';
 import { saveAuthData, getAuthData } from '../db/indexedDB';
+import './Login.css';
 
 const Login = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -66,67 +66,44 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
-        <div>
-          <h2 className="text-center text-3xl font-bold text-gray-900">
-            {isOnline ? 'Login (Demo Mode)' : 'Offline Login'}
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            {isOnline ? 'Connected' : 'Working Offline'}
-          </p>
+    <div className="login-container">
+      <div className="login-box">
+        <div className="login-header">
+          <h2>{isOnline ? 'Login (Demo Mode)' : 'Offline Login'}</h2>
+          <p>{isOnline ? 'Connected' : 'Working Offline'}</p>
         </div>
         
-        <form className="mt-8 space-y-6" onSubmit={handleLogin}>
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="username" className="sr-only">Username</label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                required
-                className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Username (demo)"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">Password</label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Password (123456)"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300"
-            >
-              {isLoading ? 'Logging in...' : 'Sign in'}
-            </button>
-          </div>
+        <form className="login-form" onSubmit={handleLogin}>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            required
+            placeholder="Username (demo)"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            placeholder="Password (123456)"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Logging in...' : 'Sign in'}
+          </button>
         </form>
 
         {status && (
-          <div className={`mt-4 text-center text-sm ${
-            status.includes('successful') ? 'text-green-600' : 'text-red-600'
-          }`}>
+          <div className={`login-status ${status.includes('successful') ? 'text-green-600' : 'text-red-600'}`}>
             {status}
           </div>
         )}
 
-        <div className="mt-4 text-center text-sm text-gray-500">
+        <div className="login-demo-credentials">
           Demo Mode Credentials:<br />
           Username: demo<br />
           Password: 123456
